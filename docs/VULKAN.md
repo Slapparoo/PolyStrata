@@ -43,14 +43,23 @@ is the runtime, not the engine.
 
 Both projects are MIT-licensed with the same copyright line, so the code moves freely.
 
-## The prerequisite: the submodule has to be fetchable
+## The submodule: a pin plus a patch
 
-The port needs `third_party/llama.cpp` as a submodule, on the branch `strata/ggml-interop` — three commits past
-the pin, for the accessors that hand a Vulkan buffer to ggml. **That branch is local-only until it is pushed to a
-fork a clone can reach**, so `git submodule update` fails on it today.
+The port needs `third_party/llama.cpp` as a submodule, and the accessors that hand a Vulkan buffer to ggml —
+the tensor's VkBuffer, the device handles, a buffer over a foreign VkBuffer.
 
-Push it before the merge. The patch `patches/llama.cpp-qwen3-coder-any-argument-order.patch` is applied to the
-submodule's working tree at configure time and is deliberately not committed there.
+Those were three commits on a **local branch** of the submodule, which made the tree single-machine: a clone
+that could not fetch that branch would not build. **They are a patch now** —
+`patches/llama.cpp-vulkan-interop.patch`, 159 lines over three files — and the build applies it at configure
+time next to the qwen3-coder parser patch, with the same reverse dry-run so an already-applied patch is
+harmless.
+
+**A clone of the pin builds them.** Checked on 2026-10-21: a pristine checkout of the pinned commit, both
+patches applied at configure, prints `interop accessor present`, and the interop spike target builds. The patch
+reproduces that branch's tree exactly — the whole-tree hash of the pin plus the patch matches the branch's.
+
+The gitlink still points at the branch, so `git submodule update` wants a commit it cannot fetch. **The pin plus
+the patch is the portable form**, and it is what comes over with the merge.
 
 This tree vendors only `third_party/ggml/ggml-common.h` — the i-quant codebook tables — and that stays.
 

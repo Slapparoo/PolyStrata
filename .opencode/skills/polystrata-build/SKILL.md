@@ -83,8 +83,9 @@ directory, the model's name and the port.
 `third_party/ggml/` holds the vendored `ggml-common.h` (the i-quant codebook tables) and is **not** a
 submodule.
 
-> **The Vulkan work brings a `third_party/llama.cpp` submodule** — see `docs/VULKAN.md`. It has to be on the
-> `strata/ggml-interop` branch, and until that branch is pushed to a fork a clone cannot fetch it.
+> **The Vulkan work brings a `third_party/llama.cpp` submodule** — see `docs/VULKAN.md`. The ggml-vulkan
+> interop accessors are a **patch** (`patches/llama.cpp-vulkan-interop.patch`), applied at configure time next
+> to the qwen3-coder parser patch, so a clone of the pin builds them.
 
 ## Warnings
 

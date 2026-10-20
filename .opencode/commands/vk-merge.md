@@ -62,14 +62,16 @@ only 4.
 4. **The four big files** (`generate.cpp`, `prefill.cpp`, `verify.cpp`, `qsa_prompt_attn.cu`) last, once the
    shape of the tree is settled.
 
-## The prerequisite
+## The submodule
 
-The Vulkan port needs `third_party/llama.cpp` as a submodule, on the `strata/ggml-interop` branch — three commits
-past the pin, for the ggml-vulkan interop accessors. **That branch is local-only until it is pushed to a fork
-that a clone can reach**, so `git submodule update` fails on it. Push it first.
+The Vulkan port needs `third_party/llama.cpp` as a submodule, and the ggml-vulkan interop accessors. **Those are
+a patch now** — `patches/llama.cpp-vulkan-interop.patch`, 159 lines over three files — applied at configure time
+next to the qwen3-coder parser patch, so a clone of the pin builds them. Checked on 2026-10-21: a pristine
+checkout of the pinned commit, both patches applied at configure, prints `interop accessor present` and the
+interop spike target builds.
 
-The patch `patches/llama.cpp-qwen3-coder-any-argument-order.patch` is applied to the submodule's working tree at
-configure time, and is deliberately not committed there.
+The gitlink still points at the branch, so `git submodule update` wants a commit it cannot fetch. **The pin plus
+the patch is the portable form**, and it comes over with the merge.
 
 ## After the merge
 
