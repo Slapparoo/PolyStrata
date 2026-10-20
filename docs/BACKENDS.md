@@ -1987,7 +1987,8 @@ Setup knows the files in the table above. Another file of one of these architect
   ([MULTI_GPU.md](MULTI_GPU.md#the-strata-poly-models)); that ran with Qwen3.6 and Gemma 4 on two RTX 3080
   under Linux only. An AMD card runs them through the HIP build as well
   ([AMD_HIP.md](AMD_HIP.md#strata-poly-on-amd-beta)): Qwen3.6 and Ornith on an RX 7600 under Linux, Tiel Coder on
-  an RX 9070 XT under Windows; nothing else on either.
+  an RX 9070 XT under Windows; nothing else on either. A Vulkan backend is coming, and it is what the cards the
+  HIP build does not reach will use ([VULKAN.md](VULKAN.md)).
 - The changes that came from the laptop were built on Windows first, and on Linux on 2026-10-10 (gcc 11.4,
   CUDA 12.8), where the first sizes were checked against llama.cpp and with and without guesses again, and the
   benchmark of [A prompt of 30,000 tokens](#a-prompt-of-30000-tokens) was run. GLM 5.3 Flash, which only that

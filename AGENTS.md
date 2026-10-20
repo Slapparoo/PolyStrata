@@ -21,6 +21,7 @@ offers the same steps as tools.
 - How the engine works, every measured number, the API and all settings: [docs/DETAILS.md](docs/DETAILS.md) and
   the [paper](docs/paper/Strata-Paper.pdf).
 - AMD (HIP) build and validation: [docs/AMD_HIP.md](docs/AMD_HIP.md); multi-GPU: [docs/MULTI_GPU.md](docs/MULTI_GPU.md).
+- The Vulkan backend, which is coming: [docs/VULKAN.md](docs/VULKAN.md).
 - Text taken from the Strata project names that project. After merging from it,
   `python tools/polystrata_names.py` writes PolyStrata again; its first lines say what it leaves alone.
 - Setup's own tests run without a GPU or downloads: `python tools/test_setup_<name>.py` (for example
