@@ -1,0 +1,33 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+
+    // No .clang-format / .clang-tidy / .editorconfig in this tree, and the docs' style rule ("plain words,
+    // measured numbers with what they were measured on") is about prose, not formatting.  A formatter that
+    // "found" a style would rewrite files the project has never rewritten.  Off by design.
+    "formatter": false,
+
+    // Ordered rules; the LAST matching rule wins.
+    "permissions": [
+        // Generated trees are never hand-edited.  A change that looks wrong there is a build-system
+        // problem, not a source problem.
+        { "action": "edit", "resource": "build*/**", "effect": "deny" },
+        { "action": "edit", "resource": "tmp/mingw-vulkan/**", "effect": "deny" },
+
+        // The llama.cpp submodule arrives with the Vulkan merge and carries ONE deliberate, UNCOMMITTED
+        // build-time edit (the qwen3-coder parser patch, re-applied by CMake at configure time).  Its
+        // branch is local-only until it is pushed, so an edit here can desynchronise it from patches/.
+        { "action": "edit", "resource": "third_party/llama.cpp/**", "effect": "ask" },
+
+        // Never publish without asking.
+        { "action": "shell", "resource": "git push*", "effect": "ask" },
+        { "action": "shell", "resource": "git commit -a*", "effect": "ask" },
+
+        // Kills a running server that holds the card.  A stale engine is the first suspect for a failed
+        // allocation, but it also kills a user's other session.
+        { "action": "shell", "resource": "taskkill*", "effect": "ask" },
+        { "action": "shell", "resource": "rm -rf*", "effect": "ask" },
+
+        // The project's own skills are the fast path for the work this repo repeats.
+        { "action": "skill", "resource": "*", "effect": "allow" }
+    ]
+}
